@@ -87,21 +87,14 @@ public class ChatClient {
             PrintWriter printWriter = Utilities.getWriter(socket);
             if (printWriter != null) {
                 Log.d(Constants.TAG, "Sending messages to " + socket.getInetAddress() + ":" + socket.getLocalPort());
-                try {
-                    // TODO exercise 6
-                    // iterate while the thread is not yet interrupted
-                    // - get the content (a line) from the messageQueue, if available, using the take() method
-                    // - if the content is not null
-                    //   - send the content to the PrintWriter, as a line
-                    //   - create a Message instance, with the content received and Constants.MESSAGE_TYPE_SENT as message type
-                    //   - add the message to the conversationHistory
-                    //   - if the ChatConversationFragment is visible (query the FragmentManager for the Constants.FRAGMENT_TAG tag)
-                } catch (InterruptedException interruptedException) {
-                    Log.e(Constants.TAG, "An exception has occurred: " + interruptedException.getMessage());
-                    if (Constants.DEBUG) {
-                        interruptedException.printStackTrace();
-                    }
-                }
+                // TODO exercise 6
+                // iterate while the thread is not yet interrupted
+                // - get the content (a line) from the messageQueue, if available, using the take() method
+                // - if the content is not null
+                //   - send the content to the PrintWriter, as a line
+                //   - create a Message instance, with the content received and Constants.MESSAGE_TYPE_SENT as message type
+                //   - add the message to the conversationHistory
+                //   - if the ChatConversationFragment is visible (query the FragmentManager for the Constants.FRAGMENT_TAG tag)
             }
 
             Log.i(Constants.TAG, "Send Thread ended");
@@ -120,21 +113,14 @@ public class ChatClient {
             BufferedReader bufferedReader = Utilities.getReader(socket);
             if (bufferedReader != null) {
                 Log.d(Constants.TAG, "Receiving messages from " + socket.getInetAddress() + ":" + socket.getLocalPort());
-                try {
-                    // TODO: exercise 7
-                    // iterate while the thread is not yet interrupted
-                    // - receive the content (a line) from the bufferedReader, if available
-                    // - if the content is not null
-                    //   - create a Message instance, with the content received and Constants.MESSAGE_TYPE_RECEIVED as message type
-                    //   - add the message to the conversationHistory
-                    //   - if the ChatConversationFragment is visible (query the FragmentManager for the Constants.FRAGMENT_TAG tag)
-                    //   append the message to the graphic user interface
-                } catch (IOException ioException) {
-                    Log.e(Constants.TAG, "An exception has occurred: " + ioException.getMessage());
-                    if (Constants.DEBUG) {
-                        ioException.printStackTrace();
-                    }
-                }
+                // TODO: exercise 7
+                // iterate while the thread is not yet interrupted
+                // - receive the content (a line) from the bufferedReader, if available
+                // - if the content is not null
+                //   - create a Message instance, with the content received and Constants.MESSAGE_TYPE_RECEIVED as message type
+                //   - add the message to the conversationHistory
+                //   - if the ChatConversationFragment is visible (query the FragmentManager for the Constants.FRAGMENT_TAG tag)
+                //   append the message to the graphic user interface
             }
 
             Log.i(Constants.TAG, "Receive Thread ended");
