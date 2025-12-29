@@ -1,0 +1,39 @@
+pluginManagement {
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "Laborator09"
+
+// Java Skeleton modules (labtasks)
+include ':labtasks'
+project(':labtasks').projectDir = new File(rootDir, 'labtasks/app')
+
+// Kotlin Skeleton modules (labtasks)
+include ':labtasks-kotlin'
+project(':labtasks-kotlin').projectDir = new File(rootDir, 'labtasks-kotlin/app')
+
+// Java Solution modules
+include ':solutions'
+project(':solutions').projectDir = new File(rootDir, 'solutions/app')
+
+// Kotlin Solution modules
+include ':solutions-kotlin'
+project(':solutions-kotlin').projectDir = new File(rootDir, 'solutions-kotlin/app')
+

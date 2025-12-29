@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_gravity="end">
+
+        <EditText
+            android:id="@+id/port_edit_text"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:ems="7"
+            android:hint="@string/service_port"
+            android:inputType="number"
+            android:textAppearance="@style/TextAppearance.AppCompat" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/service_registration_status_button"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.35"
+            android:background="@color/colorRed"
+            android:text="@string/register_service" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="5dp" />
+
+        <Button
+            android:id="@+id/service_discovery_status_button"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.45"
+            android:background="@color/colorRed"
+            android:text="@string/start_service_discovery" />
+
+    </LinearLayout>
+
+<!--
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="10dp" />
+-->
+
+    <TextView
+        android:id="@+id/service_discovery_local_addr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Local IP" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="1dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_weight="1"
+            android:background="@drawable/frame_border"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/discovered_services"
+                android:textColor="@color/colorDarkBlue" />
+
+            <ListView
+                android:id="@+id/discovered_services_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/frame_border">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/colorDarkBlue"
+                android:text="@string/conversations"/>
+
+            <ListView
+                android:id="@+id/conversations_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
