@@ -2,6 +2,7 @@ package ro.pub.cs.systems.eim.lab09.chatservicejmdns.networkservicediscoveryoper
 
 import android.content.Context
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import java.io.BufferedReader
 import java.io.IOException
@@ -71,14 +72,31 @@ class ChatClient(
             val printWriter: PrintWriter? = Utilities.getWriter(socket!!)
             if (printWriter != null) {
                 Log.d(Constants.TAG, "Sending messages to ${socket!!.inetAddress}:${socket!!.localPort}")
-                // TODO exercise 6
-                // iterate while the thread is not yet interrupted
-                // - get the content (a line) from the messageQueue, if available, using the take() method
-                // - if the content is not null
-                //   - send the content to the PrintWriter, as a line
-                //   - create a Message instance, with the content received and Constants.MESSAGE_TYPE_SENT as message type
-                //   - add the message to the conversationHistory
-                //   - if the ChatConversationFragment is visible (query the FragmentManager for the Constants.FRAGMENT_TAG tag)
+                try {
+                    while (!currentThread().isInterrupted) {
+                        val content = messageQueue.take()
+                        if (content != null) {
+                            Log.d(Constants.TAG, "Sending the message: $content")
+                            printWriter.println(content)
+                            printWriter.flush()
+                            val message = Message(content, Constants.MESSAGE_TYPE_SENT)
+                            conversationHistory.add(message)
+                            if (context != null) {
+                                val chatActivity = context as ChatActivity
+                                val fragmentManager: FragmentManager = chatActivity.supportFragmentManager
+                                val fragment: Fragment? = fragmentManager.findFragmentByTag(Constants.FRAGMENT_TAG)
+                                if (fragment is ChatConversationFragment && fragment.isVisible) {
+                                    fragment.appendMessage(message)
+                                }
+                            }
+                        }
+                    }
+                } catch (interruptedException: InterruptedException) {
+                    Log.e(Constants.TAG, "An exception has occurred: ${interruptedException.message}")
+                    if (Constants.DEBUG) {
+                        interruptedException.printStackTrace()
+                    }
+                }
             }
 
             Log.i(Constants.TAG, "Send Thread ended")
@@ -94,14 +112,29 @@ class ChatClient(
             val bufferedReader: BufferedReader? = Utilities.getReader(socket!!)
             if (bufferedReader != null) {
                 Log.d(Constants.TAG, "Receiving messages from ${socket!!.inetAddress}:${socket!!.localPort}")
-                // TODO: exercise 7
-                // iterate while the thread is not yet interrupted
-                // - receive the content (a line) from the bufferedReader, if available
-                // - if the content is not null
-                //   - create a Message instance, with the content received and Constants.MESSAGE_TYPE_RECEIVED as message type
-                //   - add the message to the conversationHistory
-                //   - if the ChatConversationFragment is visible (query the FragmentManager for the Constants.FRAGMENT_TAG tag)
-                //   append the message to the graphic user interface
+                try {
+                    while (!currentThread().isInterrupted) {
+                        val content = bufferedReader.readLine()
+                        if (content != null) {
+                            Log.d(Constants.TAG, "Received the message: $content")
+                            val message = Message(content, Constants.MESSAGE_TYPE_RECEIVED)
+                            conversationHistory.add(message)
+                            if (context != null) {
+                                val chatActivity = context as ChatActivity
+                                val fragmentManager: FragmentManager = chatActivity.supportFragmentManager
+                                val fragment: Fragment? = fragmentManager.findFragmentByTag(Constants.FRAGMENT_TAG)
+                                if (fragment is ChatConversationFragment && fragment.isVisible) {
+                                    fragment.appendMessage(message)
+                                }
+                            }
+                        }
+                    }
+                } catch (ioException: IOException) {
+                    Log.e(Constants.TAG, "An exception has occurred: ${ioException.message}")
+                    if (Constants.DEBUG) {
+                        ioException.printStackTrace()
+                    }
+                }
             }
 
             Log.i(Constants.TAG, "Receive Thread ended")
@@ -149,4 +182,3 @@ class ChatClient(
         }
     }
 }
-
